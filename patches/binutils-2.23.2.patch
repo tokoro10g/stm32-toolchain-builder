@@ -1,0 +1,14 @@
+diff -Naur binutils-2.23.2/binutils/dwarf.c binutils-2.23.2-arm/binutils/dwarf.c
+--- binutils-2.23.2/binutils/dwarf.c	2012-07-02 23:35:33.000000000 +0900
++++ binutils-2.23.2-arm/binutils/dwarf.c	2013-09-11 13:58:42.619363937 +0900
+@@ -5968,6 +5968,10 @@
+     }
+ }
+ 
++#if defined (__MINGW32__)
++extern char *optarg;
++#endif
++
+ void
+ dwarf_select_sections_by_letters (const char *letters)
+ {

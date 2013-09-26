@@ -8,8 +8,6 @@ Features:
   - Multilib available for Cortex-M0,M3,M4
   - You only have to do is to execute "make" (see the usage below)
 
-This text you see here is *actually* written in Markdown! To get a feel for Markdown's syntax, type some text into the left window and watch the results in the right.  
-
 Version
 -------
 

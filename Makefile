@@ -71,7 +71,7 @@ patch:
 	patch -p1 -d $(GCC_SRC) < patches/$(GCC_SRC).patch
 	@echo 
 
-build: build-expat build-zlib build-gmp build-mpfr build-binutils build-gcc-1 build-newlib build-gcc-2 build-gdb strip
+build: build-expat build-zlib build-gmp build-mpfr build-mpc build-binutils build-gcc-1 build-newlib build-gcc-2 build-gdb strip
 
 build-expat:
 	@echo 
@@ -109,6 +109,17 @@ build-mpfr:
 	mkdir -p mpfr-build;\
 	cd mpfr-build;\
 	../$(MPFR_SRC)/configure --prefix=$(ADDON_TOOLS_DIR) --disable-shared --with-gmp-build=$(ADDON_TOOLS_DIR)/../gmp-build;\
+	make;\
+	make install
+	@echo 
+
+build-mpc:
+	@echo 
+	@echo Building mpc...
+	mkdir -p mpc-build;\
+	cd mpc-build;\
+	CPPFLAGS=-I$(ADDON_TOOLS_DIR)/include LDFLAGS=-L$(ADDON_TOOLS_DIR)/lib \
+	../$(MPC_SRC)/configure --prefix=$(ADDON_TOOLS_DIR) --disable-shared --enable-static;\
 	make;\
 	make install
 	@echo 

@@ -49,6 +49,9 @@ EXPAT_SRC="expat-$(EXPAT_VER)"
 ZLIB_SRC="zlib-$(ZLIB_VER)"
 MPC_SRC="mpc-$(MPC_VER)"
 
+ABI_MODE='ABI=32'
+CC='gcc -m32'
+
 all: get-packages extract patch build
 
 get-packages:
@@ -97,7 +100,7 @@ build-gmp:
 	@echo Building gmp...
 	mkdir -p gmp-build;\
 	cd gmp-build;\
-	../$(GMP_SRC)/configure --prefix=$(ADDON_TOOLS_DIR) --disable-shared;\
+	../$(GMP_SRC)/configure $(ABI_MODE) --prefix=$(ADDON_TOOLS_DIR) --disable-shared;\
 	make;\
 	make install
 	-@rm $(ADDON_TOOLS_DIR)/lib/*.dylib 2>/dev/null || true
@@ -108,7 +111,7 @@ build-mpfr:
 	@echo Building mpfr...
 	mkdir -p mpfr-build;\
 	cd mpfr-build;\
-	../$(MPFR_SRC)/configure --prefix=$(ADDON_TOOLS_DIR) --disable-shared --with-gmp-build=$(ADDON_TOOLS_DIR)/../gmp-build;\
+	../$(MPFR_SRC)/configure $(ABI_MODE) --prefix=$(ADDON_TOOLS_DIR) --disable-shared --with-gmp-build=$(ADDON_TOOLS_DIR)/../gmp-build;\
 	make;\
 	make install
 	@echo 
@@ -119,7 +122,7 @@ build-mpc:
 	mkdir -p mpc-build;\
 	cd mpc-build;\
 	CPPFLAGS=-I$(ADDON_TOOLS_DIR)/include LDFLAGS=-L$(ADDON_TOOLS_DIR)/lib \
-	../$(MPC_SRC)/configure --prefix=$(ADDON_TOOLS_DIR) --disable-shared --enable-static;\
+	../$(MPC_SRC)/configure $(ABI_MODE) --prefix=$(ADDON_TOOLS_DIR) --disable-shared --enable-static;\
 	make;\
 	make install
 	@echo 
